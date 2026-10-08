@@ -1,0 +1,81 @@
+@font-face {
+  font-family: 'icomoon';
+  src:
+    url('./fonts/icomoon.woff?63bgqm') format('woff'),
+    url('./fonts/icomoon.ttf?63bgqm') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^='icon-'],
+[class*=' icon-'] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-arrows-down:before {
+  content: '\e900';
+}
+.icon-arrows-left:before {
+  content: '\e901';
+  color: #41493e;
+}
+.icon-arrows-ringh:before {
+  content: '\e902';
+  color: #00450d;
+}
+.icon-camara:before {
+  content: '\e903';
+  color: #c0c9bb;
+}
+.icon-home:before {
+  content: '\e904';
+  color: #00450d;
+}
+.icon-Icon:before {
+  content: '\e905';
+  color: #41493e;
+}
+.icon-logo:before {
+  content: '\e906';
+  color: #fff;
+}
+.icon-menu:before {
+  content: '\e907';
+  color: #00450d;
+}
+.icon-ojo-login:before {
+  content: '\e908';
+  color: #717a6d;
+}
+.icon-ojo-login-most:before {
+  content: '\e909';
+  color: #717a6d;
+}
+.icon-report:before {
+  content: '\e90a';
+  color: #41493e;
+}
+.icon-ubicacion:before {
+  content: '\e90b';
+  color: #1b5e20;
+}
+.icon-user:before {
+  content: '\e90c';
+  color: #00450d;
+}
+.icon-user-nav:before {
+  content: '\e90d';
+  color: #41493e;
+}
