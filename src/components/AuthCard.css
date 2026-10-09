@@ -129,6 +129,11 @@
   background: var(--color-surface-container-low);
 }
 
+.auth-notice-error {
+  color: #9b1c1c;
+  background: #fde8e8;
+}
+
 .auth-footer {
   margin: 0;
   font-size: 14px;
@@ -140,7 +145,7 @@
 .auth-footer a{
   font-weight: bold;
 }
-[aria-labelledby="register-title"] .auth-subtitle {
+.auth-card[aria-labelledby="register-title"] .auth-subtitle {
   font-weight: bold;
   font-size: 16px;
   color: var(--color-on-surface);

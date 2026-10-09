@@ -1,0 +1,138 @@
+.global-header {
+  display: flex;
+  min-height: 64px;
+  align-items: center;
+  background: var(--color-surface);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.global-header .mobile-only {
+  display: flex;
+}
+.global-header .desktop-only {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .global-header .mobile-only {
+    display: none;
+  }
+  .global-header .desktop-only {
+    display: flex;
+  }
+}
+
+/* Layout Móvil */
+.header-mobile {
+  width: 100%;
+  min-height: 64px;
+  padding: 0 var(--page-padding);
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Layout Escritorio */
+.header-desktop {
+  width: min(100%, 1200px);
+  min-height: 64px;
+  padding: 0 clamp(16px, 2vw, 24px);
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.global-header .header-logo-container {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.global-header .logo-icon-bg {
+  background: var(--color-primary-dark);
+  color: var(--color-on-primary);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 0;
+}
+
+.global-header .logo-text {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-primary-dark);
+}
+
+.global-header .icon-btn {
+  background: none;
+  border: none;
+  color: var(--color-primary-dark);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.global-header .icon-btn:hover {
+  background-color: var(--color-surface-container);
+}
+
+.global-header .profile-btn {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  padding: 8px;
+  background: transparent;
+  color: var(--color-on-surface-variant);
+}
+
+.global-header .profile-btn:hover {
+  background-color: var(--color-surface-container);
+}
+
+.global-header .desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.global-header .desk-nav-item {
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-on-surface-variant);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.global-header .desk-nav-item:hover {
+  background: var(--color-surface-container-low);
+  text-decoration: none;
+}
+
+.global-header .desk-nav-item.active {
+  background: var(--color-surface-container);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}

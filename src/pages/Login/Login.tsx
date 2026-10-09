@@ -1,15 +1,16 @@
 import { useRef, useState, type ChangeEvent, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AuthCard } from '../../components/AuthCard'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import { PasswordToggle } from '../../components/PasswordToggle'
 import { isValidEmail, MIN_PASSWORD_LENGTH } from '../../utils/validation'
 import type { LoginErrors, LoginRequest } from '../../types/auth'
+import { isValidCredentials, signIn } from '../../utils/auth'
 
 const initialState: LoginRequest = { email: '', password: '' }
 
-type Notice = { type: 'success' | 'info'; message: string }
+type Notice = { type: 'success' | 'info' | 'error'; message: string }
 
 function validate(form: LoginRequest): LoginErrors {
   const errors: LoginErrors = {}
@@ -30,6 +31,9 @@ function validate(form: LoginRequest): LoginErrors {
 }
 
 export function Login() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const redirectTo = (location.state as { from?: { pathname?: string } } | null)?.from?.pathname ?? '/home'
   const [form, setForm] = useState<LoginRequest>(initialState)
   const [errors, setErrors] = useState<LoginErrors>({})
   const [showPassword, setShowPassword] = useState(false)
@@ -62,14 +66,17 @@ export function Login() {
       return
     }
 
+    if (!isValidCredentials(form.email, form.password)) {
+      setNotice({ type: 'error', message: 'Correo o contraseña incorrectos.' })
+      return
+    }
+
     // Validación únicamente local: todavía no hay conexión con el backend.
     setLoading(true)
     window.setTimeout(() => {
+      signIn()
       setLoading(false)
-      setNotice({
-        type: 'success',
-        message: 'Credenciales válidas. Validación realizada de forma local.',
-      })
+      navigate(redirectTo, { replace: true })
     }, 600)
   }
 
@@ -105,12 +112,12 @@ export function Login() {
           type={showPassword ? 'text' : 'password'}
           autoComplete="current-password"
           placeholder="••••••••"
-          endAdornment={
+          endAdornment={form.password ? (
             <PasswordToggle
               visible={showPassword}
               onToggle={() => setShowPassword((value) => !value)}
             />
-          }
+          ) : undefined}
           value={form.password}
           onChange={handleChange}
           error={errors.password}
@@ -132,7 +139,7 @@ export function Login() {
         </div>
 
         {notice && (
-          <p className={`auth-notice auth-notice-${notice.type}`} role="status">
+          <p className={`auth-notice auth-notice-${notice.type}`} role={notice.type === 'error' ? 'alert' : 'status'}>
             {notice.message}
           </p>
         )}

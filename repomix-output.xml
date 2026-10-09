@@ -1,0 +1,2192 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+public/
+  favicon.svg
+  icons.svg
+src/
+  assets/
+    icons/
+      fonts/
+        icomoon.ttf
+        icomoon.woff
+      selection.json
+      style.css
+  components/
+    AuthCard.css
+    AuthCard.tsx
+    BottomNav.css
+    BottomNav.tsx
+    Button.tsx
+    Header.css
+    Header.tsx
+    Icon.tsx
+    Input.tsx
+    PasswordToggle.tsx
+  pages/
+    ComingSoon/
+      ComingSoon.css
+      ComingSoon.tsx
+    Home/
+      Home.css
+      Home.tsx
+    Login/
+      Login.tsx
+    Register/
+      Register.tsx
+  routes/
+    AppRouter.tsx
+    RequireAuth.tsx
+  types/
+    auth.ts
+  utils/
+    auth.ts
+    validation.ts
+  App.tsx
+  index.css
+  main.tsx
+.gitignore
+.oxlintrc.json
+index.html
+package.json
+README.md
+tsconfig.app.json
+tsconfig.json
+tsconfig.node.json
+vite.config.ts
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="src/components/BottomNav.css">
+.global-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 16px;
+  z-index: 50;
+}
+
+@media (min-width: 768px) {
+  .global-bottom-nav {
+    display: none;
+  }
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-on-surface-variant);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-item:hover {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.nav-item [class^='icon-'] {
+  font-size: 24px;
+}
+
+.nav-item [class^='icon-']::before {
+  color: currentColor;
+}
+
+.nav-item span {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.nav-item.active {
+  color: var(--color-primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+</file>
+
+<file path="src/components/BottomNav.tsx">
+import { Link, useLocation } from 'react-router-dom'
+import { Icon } from './Icon'
+import './BottomNav.css'
+
+export function BottomNav() {
+  const location = useLocation()
+
+  return (
+    <nav className="global-bottom-nav">
+      <Link 
+        to="/home" 
+        className={`nav-item ${location.pathname === '/home' ? 'active' : ''}`}
+      >
+        <Icon name="home" />
+        <span>Inicio</span>
+      </Link>
+      
+      <Link 
+        to="/mis-reportes" 
+        className={`nav-item ${location.pathname === '/mis-reportes' ? 'active' : ''}`}
+      >
+        <Icon name="report" />
+        <span>Mis reportes</span>
+      </Link>
+      
+      <Link 
+        to="/crear" 
+        className={`nav-item ${location.pathname === '/crear' ? 'active' : ''}`}
+      >
+        <Icon name="Icon" />
+        <span>Crear reporte</span>
+      </Link>
+      
+      <Link 
+        to="/perfil" 
+        className={`nav-item ${location.pathname === '/perfil' ? 'active' : ''}`}
+      >
+        <Icon name="user" />
+        <span>Perfil</span>
+      </Link>
+    </nav>
+  )
+}
+</file>
+
+<file path="src/components/Header.css">
+.global-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+  padding: 0 var(--page-padding);
+  background: var(--color-surface);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: var(--color-primary-dark);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  background-color: var(--color-surface-container);
+}
+
+.header-logo-container {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.logo-icon-bg {
+  background: var(--color-primary-dark);
+  color: var(--color-on-primary);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12.76px;
+  line-height: 0;
+}
+
+.logo-icon-bg [class^='icon-'] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    margin-top: 3px;
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-primary-dark);
+  line-height: 1;
+}
+</file>
+
+<file path="src/components/Header.tsx">
+import { Icon } from './Icon'
+import './Header.css'
+
+export function Header() {
+  return (
+    <header className="global-header">
+      <button className="icon-btn" aria-label="Menú">
+        <Icon name="menu" />
+      </button>
+      <div className="header-logo-container">
+        <span className="logo-icon-bg">
+          <Icon name="logo" />
+        </span>
+        <h1 className="logo-text">EcoAlerta</h1>
+      </div>
+      <button className="icon-btn" aria-label="Perfil">
+        <Icon name="user-nav" />
+      </button>
+    </header>
+  )
+}
+</file>
+
+<file path="src/pages/ComingSoon/ComingSoon.css">
+.profile-session-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  max-width: 560px;
+  margin-top: var(--space-xl);
+  padding: var(--space-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-2);
+}
+
+.profile-session-card h3,
+.profile-session-card p {
+  margin: 0;
+}
+
+.profile-session-card h3 {
+  margin-bottom: var(--space-xs);
+  color: var(--color-on-surface);
+  font-size: 16px;
+}
+
+.profile-session-card p {
+  color: var(--color-on-surface-variant);
+  font-size: 14px;
+}
+
+@media (max-width: 480px) {
+  .profile-session-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+</file>
+
+<file path="src/pages/ComingSoon/ComingSoon.tsx">
+import { useNavigate } from 'react-router-dom'
+import { Button } from '../../components/Button'
+import { BottomNav } from '../../components/BottomNav'
+import { Header } from '../../components/Header'
+import { signOut } from '../../utils/auth'
+import './ComingSoon.css'
+
+interface ComingSoonProps {
+  title: string
+}
+
+export function ComingSoon({ title }: ComingSoonProps) {
+  const navigate = useNavigate()
+
+  const handleSignOut = () => {
+    signOut()
+    navigate('/login', { replace: true })
+  }
+
+  return (
+    <div className="home-layout">
+      <Header />
+      <main className="home-content">
+        <section className="greeting-section">
+          <h2 className="greeting-title">{title}</h2>
+          <p className="greeting-subtitle">Esta sección estará disponible próximamente.</p>
+          {title === 'Perfil' && (
+            <section className="profile-session-card" aria-label="Sesión">
+              <div>
+                <h3>Tu cuenta</h3>
+                <p>Cierra tu sesión de forma segura en este dispositivo.</p>
+              </div>
+              <Button variant="outline" onClick={handleSignOut}>
+                Cerrar sesión
+              </Button>
+            </section>
+          )}
+        </section>
+      </main>
+      <BottomNav />
+    </div>
+  )
+}
+</file>
+
+<file path="src/pages/Home/Home.css">
+.home-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  background: var(--color-background);
+  padding-bottom: 72px;
+}
+
+.home-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-md) var(--page-padding) var(--space-xxl);
+}
+
+.greeting-section {
+  margin-bottom: var(--space-xl);
+}
+
+.greeting-title {
+  font-size: 24px;
+  color: var(--color-primary-dark);
+  margin-bottom: var(--space-xs);
+  line-height: 1.2;
+}
+
+.greeting-subtitle {
+  margin: 0;
+  color: var(--color-on-surface-variant);
+  font-size: 16px;
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+  .quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.action-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0px 4px 12px rgba(38, 50, 56, 0.08);
+  transition: background-color 0.2s;
+}
+
+.action-card:hover {
+  background-color: var(--color-surface-container);
+}
+
+.action-card-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.action-icon-wrapper {
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  height: 36px;
+  width: 36px;
+  background: var(--color-primary);
+}
+
+.bg-primary-container {
+  background: var(--color-primary-container);
+  color: var(--color-on-primary);
+}
+
+.bg-secondary-container {
+  background: var(--color-secondary); 
+  color: var(--color-on-primary);
+}
+
+.action-text h3 {
+  margin: 0;
+  font-size: 18px;
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+.action-text p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-on-surface-variant);
+}
+
+.action-arrow {
+  font-size: 24px;
+  color: var(--color-primary-dark);
+}
+
+.chevron-right {
+  transform: rotate(-90deg);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.section-header h2 {
+  font-size: 22px;
+  margin: 0;
+  color: var(--color-primary-dark);
+  font-weight: 700;
+}
+
+.view-all {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+.report-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.report-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  box-shadow: 0px 4px 12px rgba(38, 50, 56, 0.08);
+}
+
+
+@media (min-width: 768px) {
+  .report-card {
+    flex-direction: row;
+  }
+}
+
+.report-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+@media (min-width: 768px) {
+  .report-image {
+    width: 96px;
+    height: 96px;
+  }
+}
+
+.report-body {
+  flex: 1;
+}
+
+.report-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-xs);
+  gap: 12px;
+}
+
+.report-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-on-surface);
+}
+
+.badge {
+  padding: 4px 12px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.badge-pending {
+  background: var(--color-error-container);
+  color: var(--color-on-error-container);
+}
+
+.badge-resolved {
+  background: var(--color-primary-container);
+  color: var(--color-on-primary);
+}
+
+.report-desc {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-on-surface-variant);
+  margin: 0 0 var(--space-sm) 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.report-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 12px;
+  color: var(--color-on-surface-variant);
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.meta-item [class^='icon-'] {
+  font-size: 16px;
+}
+</file>
+
+<file path="src/pages/Home/Home.tsx">
+import { Link } from 'react-router-dom'
+import { Icon } from '../../components/Icon'
+import { Header } from '../../components/Header'
+import { BottomNav } from '../../components/BottomNav'
+import './Home.css'
+
+export function Home() {
+  return (
+    <div className="home-layout">
+      <Header />
+
+      <main className="home-content">
+        <section className="greeting-section">
+          <h2 className="greeting-title">Hola, ciudadano</h2>
+          <p className="greeting-subtitle">¿Qué quieres reportar hoy?</p>
+        </section>
+
+        <section className="quick-actions">
+          <button className="action-card">
+            <div className="action-card-content">
+              <div className="action-icon-wrapper bg-secondary-container ">
+                <Icon name="camara2" />
+              </div>
+              <div className="action-text">
+                <h3>Nuevo Reporte</h3>
+                <p>Captura y sube evidencia</p>
+              </div>
+            </div>
+            <Icon name="arrows-down" className="action-arrow chevron-right" />
+          </button>
+
+          <button className="action-card">
+            <div className="action-card-content">
+              <div className="action-icon-wrapper bg-primary-container ">
+                <Icon name="map" />
+              </div>
+              <div className="action-text">
+                <h3>Mapa de Alertas</h3>
+                <p>Ver incidencias cercanas</p>
+              </div>
+            </div>
+            <Icon name="arrows-down" className="action-arrow chevron-right" />
+          </button>
+        </section>
+
+        <section className="recent-reports">
+          <div className="section-header">
+            <h2>Reportes Recientes</h2>
+            <Link to="/reportes" className="view-all">
+              Ver todos
+            </Link>
+          </div>
+
+          <div className="report-list">
+            <article className="report-card">
+              <img 
+                className="report-image"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuACqSrLKJim0w9FRY_6VE3Uk1hCHXgV_d_dMpUhePWXxgmW6Q33sedIYDmR8Rp_T1kvReqDI6hxvtxle0rXDWvLvDADJiefv9zc6ceTJkbbiZDZxUhHhjpvbpcBqlBssg2AxM_Sev7XagfADOgdg3_62r4P7AJyjf65v0g4_OF4p3JwcwbWU_UW4c4lFT-2AFNiH2aOzXEIoelyirQkWcTQJKikCjhQ0hfWLibO2hn2q0jIpYQa1baN" 
+                alt="Vertedero ilegal en parque" 
+              />
+              <div className="report-body">
+                <div className="report-title-row">
+                  <h3 className="report-title">Vertedero ilegal en parque</h3>
+                  <span className="badge badge-pending">Pendiente</span>
+                </div>
+                <p className="report-desc">
+                  Se ha detectado un depósito no autorizado de escombros y basura en la zona norte del Parque Central.
+                </p>
+                <div className="report-meta">
+                  <span className="meta-item">
+                    <Icon name="ubicacion" /> Parque Central
+                  </span>
+                  <span className="meta-item">
+                     <Icon name="report" /> Hace 2 horas
+                  </span>
+                </div>
+              </div>
+            </article>
+
+            <article className="report-card">
+              <img 
+                className="report-image"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbUDxgmP7_bP2Ph0sPzrK5pTzlJfFu4dfaFGGgAw99TcKCYjnAi7DDHzxjMONQE1cEYRlfmfATsCdI2gI47-QIoUYuOdpb1lWsHEdSCqs24xrZC9GeFu9JduHT-sw0eaJjAIzJXsjAheDsvIQ_rtq5_ZMtamSzmcRPr6p0HkpMqvqzm7tHWP_JVXYOr-cAYsUHh48htW_cV-EwjdLfmNLCbqmqQNOt1TKHOl_dQIah8oH8Uav8exI2" 
+                alt="Contaminación en arroyo" 
+              />
+              <div className="report-body">
+                <div className="report-title-row">
+                  <h3 className="report-title">Contaminación en arroyo</h3>
+                  <span className="badge badge-resolved">Resuelto</span>
+                </div>
+                <p className="report-desc">
+                  Desechos plásticos y agua turbia observados en el arroyo Los Pinos, cerca del puente peatonal.
+                </p>
+                <div className="report-meta">
+                  <span className="meta-item">
+                    <Icon name="ubicacion" /> Arroyo Los Pinos
+                  </span>
+                  <span className="meta-item">
+                     <Icon name="report" /> Ayer
+                  </span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <BottomNav />
+    </div>
+  )
+}
+</file>
+
+<file path="src/routes/RequireAuth.tsx">
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import { isAuthenticated } from '../utils/auth'
+
+export function RequireAuth() {
+  const location = useLocation()
+
+  if (!isAuthenticated()) {
+    return <Navigate to="/login" replace state={{ from: location }} />
+  }
+
+  return <Outlet />
+}
+</file>
+
+<file path="src/utils/auth.ts">
+const AUTH_SESSION_KEY = 'ecoalerta-authenticated'
+const REGISTERED_USERS_KEY = 'ecoalerta-registered-users'
+
+export const DEMO_USER = {
+  email: 'demo@ecoalerta.com',
+  password: 'EcoAlerta123!',
+}
+
+type StoredUser = { name: string; email: string; password: string }
+
+function getRegisteredUsers(): StoredUser[] {
+  const savedUsers = localStorage.getItem(REGISTERED_USERS_KEY)
+  if (!savedUsers) return []
+
+  try {
+    const parsedUsers: unknown = JSON.parse(savedUsers)
+    return Array.isArray(parsedUsers) ? parsedUsers as StoredUser[] : []
+  } catch {
+    return []
+  }
+}
+
+export function registerUser(user: StoredUser): boolean {
+  const email = user.email.trim().toLowerCase()
+  if (email === DEMO_USER.email || getRegisteredUsers().some((saved) => saved.email.toLowerCase() === email)) {
+    return false
+  }
+
+  localStorage.setItem(REGISTERED_USERS_KEY, JSON.stringify([
+    ...getRegisteredUsers(),
+    { ...user, email },
+  ]))
+  return true
+}
+
+export function isValidCredentials(email: string, password: string): boolean {
+  const normalizedEmail = email.trim().toLowerCase()
+  return (
+    (normalizedEmail === DEMO_USER.email && password === DEMO_USER.password) ||
+    getRegisteredUsers().some(
+      (user) => user.email.toLowerCase() === normalizedEmail && user.password === password,
+    )
+  )
+}
+
+export function isAuthenticated(): boolean {
+  return sessionStorage.getItem(AUTH_SESSION_KEY) === 'true'
+}
+
+export function signIn(): void {
+  sessionStorage.setItem(AUTH_SESSION_KEY, 'true')
+}
+
+export function signOut(): void {
+  sessionStorage.removeItem(AUTH_SESSION_KEY)
+}
+</file>
+
+<file path="public/favicon.svg">
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="46" fill="none" viewBox="0 0 48 46"><path fill="#863bff" d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z" style="fill:#863bff;fill:color(display-p3 .5252 .23 1);fill-opacity:1"/><mask id="a" width="48" height="46" x="0" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha"><path fill="#000" d="M25.842 44.938c-.664.844-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.183c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.498 0-3.579-1.842-3.579H1.133c-.92 0-1.456-1.04-.92-1.787L9.91.473c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.578 1.842 3.578h11.377c.943 0 1.473 1.088.89 1.832L25.843 44.94z" style="fill:#000;fill-opacity:1"/></mask><g mask="url(#a)"><g filter="url(#b)"><ellipse cx="5.508" cy="14.704" fill="#ede6ff" rx="5.508" ry="14.704" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -4.47 31.516)"/></g><g filter="url(#c)"><ellipse cx="10.399" cy="29.851" fill="#ede6ff" rx="10.399" ry="29.851" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -39.328 7.883)"/></g><g filter="url(#d)"><ellipse cx="5.508" cy="30.487" fill="#7e14ff" rx="5.508" ry="30.487" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.814 -25.913 -14.639)scale(1 -1)"/></g><g filter="url(#e)"><ellipse cx="5.508" cy="30.599" fill="#7e14ff" rx="5.508" ry="30.599" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.814 -32.644 -3.334)scale(1 -1)"/></g><g filter="url(#f)"><ellipse cx="5.508" cy="30.599" fill="#7e14ff" rx="5.508" ry="30.599" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -34.34 30.47)"/></g><g filter="url(#g)"><ellipse cx="14.072" cy="22.078" fill="#ede6ff" rx="14.072" ry="22.078" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="rotate(93.35 24.506 48.493)scale(-1 1)"/></g><g filter="url(#h)"><ellipse cx="3.47" cy="21.501" fill="#7e14ff" rx="3.47" ry="21.501" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.009 28.708 47.59)scale(-1 1)"/></g><g filter="url(#i)"><ellipse cx="3.47" cy="21.501" fill="#7e14ff" rx="3.47" ry="21.501" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.009 28.708 47.59)scale(-1 1)"/></g><g filter="url(#j)"><ellipse cx=".387" cy="8.972" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(39.51 .387 8.972)"/></g><g filter="url(#k)"><ellipse cx="47.523" cy="-6.092" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 47.523 -6.092)"/></g><g filter="url(#l)"><ellipse cx="41.412" cy="6.333" fill="#47bfff" rx="5.971" ry="9.665" style="fill:#47bfff;fill:color(display-p3 .2799 .748 1);fill-opacity:1" transform="rotate(37.892 41.412 6.333)"/></g><g filter="url(#m)"><ellipse cx="-1.879" cy="38.332" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 -1.88 38.332)"/></g><g filter="url(#n)"><ellipse cx="-1.879" cy="38.332" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 -1.88 38.332)"/></g><g filter="url(#o)"><ellipse cx="35.651" cy="29.907" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 35.651 29.907)"/></g><g filter="url(#p)"><ellipse cx="38.418" cy="32.4" fill="#47bfff" rx="5.971" ry="15.297" style="fill:#47bfff;fill:color(display-p3 .2799 .748 1);fill-opacity:1" transform="rotate(37.892 38.418 32.4)"/></g></g><defs><filter id="b" width="60.045" height="41.654" x="-19.77" y="16.149" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="c" width="90.34" height="51.437" x="-54.613" y="-7.533" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="d" width="79.355" height="29.4" x="-49.64" y="2.03" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="e" width="79.579" height="29.4" x="-45.045" y="20.029" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="f" width="79.579" height="29.4" x="-43.513" y="21.178" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="g" width="74.749" height="58.852" x="15.756" y="-17.901" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="h" width="61.377" height="25.362" x="23.548" y="2.284" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="i" width="61.377" height="25.362" x="23.548" y="2.284" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="j" width="56.045" height="63.649" x="-27.636" y="-22.853" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="k" width="54.814" height="64.646" x="20.116" y="-38.415" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="l" width="33.541" height="35.313" x="24.641" y="-11.323" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="m" width="54.814" height="64.646" x="-29.286" y="6.009" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="n" width="54.814" height="64.646" x="-29.286" y="6.009" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="o" width="54.814" height="64.646" x="8.244" y="-2.416" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="p" width="39.409" height="43.623" x="18.713" y="10.588" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter></defs></svg>
+</file>
+
+<file path="public/icons.svg">
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="bluesky-icon" viewBox="0 0 16 17">
+    <g clip-path="url(#bluesky-clip)"><path fill="#08060d" d="M7.75 7.735c-.693-1.348-2.58-3.86-4.334-5.097-1.68-1.187-2.32-.981-2.74-.79C.188 2.065.1 2.812.1 3.251s.241 3.602.398 4.13c.52 1.744 2.367 2.333 4.07 2.145-2.495.37-4.71 1.278-1.805 4.512 3.196 3.309 4.38-.71 4.987-2.746.608 2.036 1.307 5.91 4.93 2.746 2.72-2.746.747-4.143-1.747-4.512 1.702.189 3.55-.4 4.07-2.145.156-.528.397-3.691.397-4.13s-.088-1.186-.575-1.406c-.42-.19-1.06-.395-2.741.79-1.755 1.24-3.64 3.752-4.334 5.099"/></g>
+    <defs><clipPath id="bluesky-clip"><path fill="#fff" d="M.1.85h15.3v15.3H.1z"/></clipPath></defs>
+  </symbol>
+  <symbol id="discord-icon" viewBox="0 0 20 19">
+    <path fill="#08060d" d="M16.224 3.768a14.5 14.5 0 0 0-3.67-1.153c-.158.286-.343.67-.47.976a13.5 13.5 0 0 0-4.067 0c-.128-.306-.317-.69-.476-.976A14.4 14.4 0 0 0 3.868 3.77C1.546 7.28.916 10.703 1.231 14.077a14.7 14.7 0 0 0 4.5 2.306q.545-.748.965-1.587a9.5 9.5 0 0 1-1.518-.74q.191-.14.372-.293c2.927 1.369 6.107 1.369 8.999 0q.183.152.372.294-.723.437-1.52.74.418.838.963 1.588a14.6 14.6 0 0 0 4.504-2.308c.37-3.911-.63-7.302-2.644-10.309m-9.13 8.234c-.878 0-1.599-.82-1.599-1.82 0-.998.705-1.82 1.6-1.82.894 0 1.614.82 1.599 1.82.001 1-.705 1.82-1.6 1.82m5.91 0c-.878 0-1.599-.82-1.599-1.82 0-.998.705-1.82 1.6-1.82.893 0 1.614.82 1.599 1.82 0 1-.706 1.82-1.6 1.82"/>
+  </symbol>
+  <symbol id="documentation-icon" viewBox="0 0 21 20">
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="m15.5 13.333 1.533 1.322c.645.555.967.833.967 1.178s-.322.623-.967 1.179L15.5 18.333m-3.333-5-1.534 1.322c-.644.555-.966.833-.966 1.178s.322.623.966 1.179l1.534 1.321"/>
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M17.167 10.836v-4.32c0-1.41 0-2.117-.224-2.68-.359-.906-1.118-1.621-2.08-1.96-.599-.21-1.349-.21-2.848-.21-2.623 0-3.935 0-4.983.369-1.684.591-3.013 1.842-3.641 3.428C3 6.449 3 7.684 3 10.154v2.122c0 2.558 0 3.838.706 4.726q.306.383.713.671c.76.536 1.79.64 3.581.66"/>
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M3 10a2.78 2.78 0 0 1 2.778-2.778c.555 0 1.209.097 1.748-.047.48-.129.854-.503.982-.982.145-.54.048-1.194.048-1.749a2.78 2.78 0 0 1 2.777-2.777"/>
+  </symbol>
+  <symbol id="github-icon" viewBox="0 0 19 19">
+    <path fill="#08060d" fill-rule="evenodd" d="M9.356 1.85C5.05 1.85 1.57 5.356 1.57 9.694a7.84 7.84 0 0 0 5.324 7.44c.387.079.528-.168.528-.376 0-.182-.013-.805-.013-1.454-2.165.467-2.616-.935-2.616-.935-.349-.91-.864-1.143-.864-1.143-.71-.48.051-.48.051-.48.787.051 1.2.805 1.2.805.695 1.194 1.817.857 2.268.649.064-.507.27-.857.49-1.052-1.728-.182-3.545-.857-3.545-3.87 0-.857.31-1.558.8-2.104-.078-.195-.349-1 .077-2.078 0 0 .657-.208 2.14.805a7.5 7.5 0 0 1 1.946-.26c.657 0 1.328.092 1.946.26 1.483-1.013 2.14-.805 2.14-.805.426 1.078.155 1.883.078 2.078.502.546.799 1.247.799 2.104 0 3.013-1.818 3.675-3.558 3.87.284.247.528.714.528 1.454 0 1.052-.012 1.896-.012 2.156 0 .208.142.455.528.377a7.84 7.84 0 0 0 5.324-7.441c.013-4.338-3.48-7.844-7.773-7.844" clip-rule="evenodd"/>
+  </symbol>
+  <symbol id="social-icon" viewBox="0 0 20 20">
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M12.5 6.667a4.167 4.167 0 1 0-8.334 0 4.167 4.167 0 0 0 8.334 0"/>
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M2.5 16.667a5.833 5.833 0 0 1 8.75-5.053m3.837.474.513 1.035c.07.144.257.282.414.309l.93.155c.596.1.736.536.307.965l-.723.73a.64.64 0 0 0-.152.531l.207.903c.164.715-.213.991-.84.618l-.872-.52a.63.63 0 0 0-.577 0l-.872.52c-.624.373-1.003.094-.84-.618l.207-.903a.64.64 0 0 0-.152-.532l-.723-.729c-.426-.43-.289-.864.306-.964l.93-.156a.64.64 0 0 0 .412-.31l.513-1.034c.28-.562.735-.562 1.012 0"/>
+  </symbol>
+  <symbol id="x-icon" viewBox="0 0 19 19">
+    <path fill="#08060d" fill-rule="evenodd" d="M1.893 1.98c.052.072 1.245 1.769 2.653 3.77l2.892 4.114c.183.261.333.48.333.486s-.068.089-.152.183l-.522.593-.765.867-3.597 4.087c-.375.426-.734.834-.798.905a1 1 0 0 0-.118.148c0 .01.236.017.664.017h.663l.729-.83c.4-.457.796-.906.879-.999a692 692 0 0 0 1.794-2.038c.034-.037.301-.34.594-.675l.551-.624.345-.392a7 7 0 0 1 .34-.374c.006 0 .93 1.306 2.052 2.903l2.084 2.965.045.063h2.275c1.87 0 2.273-.003 2.266-.021-.008-.02-1.098-1.572-3.894-5.547-2.013-2.862-2.28-3.246-2.273-3.266.008-.019.282-.332 2.085-2.38l2-2.274 1.567-1.782c.022-.028-.016-.03-.65-.03h-.674l-.3.342a871 871 0 0 1-1.782 2.025c-.067.075-.405.458-.75.852a100 100 0 0 1-.803.91c-.148.172-.299.344-.99 1.127-.304.343-.32.358-.345.327-.015-.019-.904-1.282-1.976-2.808L6.365 1.85H1.8zm1.782.91 8.078 11.294c.772 1.08 1.413 1.973 1.425 1.984.016.017.241.02 1.05.017l1.03-.004-2.694-3.766L7.796 5.75 5.722 2.852l-1.039-.004-1.039-.004z" clip-rule="evenodd"/>
+  </symbol>
+</svg>
+</file>
+
+<file path="src/assets/icons/selection.json">
+{"IcoMoonType":"selection","icons":[{"icon":{"paths":["M921.6 307.2v-102.4h-102.4v-102.4h102.4v-102.4h102.4v102.4h102.4v102.4h-102.4v102.4h-102.4zM512 844.8c64 0 118.4-22.4 163.2-67.2s67.2-99.2 67.2-163.2c0-64-22.4-118.4-67.2-163.2s-99.2-67.2-163.2-67.2c-64 0-118.4 22.4-163.2 67.2s-67.2 99.2-67.2 163.2c0 64 22.4 118.4 67.2 163.2s99.2 67.2 163.2 67.2zM512 742.4c-35.84 0-66.134-12.375-90.88-37.12s-37.12-55.040-37.12-90.88c0-35.84 12.374-66.135 37.12-90.88 24.746-24.746 55.040-37.12 90.88-37.12s66.135 12.374 90.88 37.12c24.745 24.745 37.12 55.040 37.12 90.88s-12.375 66.135-37.12 90.88c-24.745 24.745-55.040 37.12-90.88 37.12zM102.4 1024c-28.16 0-52.267-10.025-72.32-30.080s-30.080-44.16-30.080-72.32v-614.4c0-28.16 10.027-52.266 30.080-72.32s44.16-30.080 72.32-30.080h161.28l94.72-102.4h358.4v204.8h102.4v102.4h204.8v512c0 28.16-10.025 52.265-30.080 72.32s-44.16 30.080-72.32 30.080h-819.2z"],"attrs":[{"fill":"rgb(144, 214, 137)"}],"width":1126,"isMulticolor":false,"isMulticolor2":false,"grid":0,"tags":["camara2"],"colorPermutations":{"10711412811131221091121173311442141371192201187125525525512794321657362169131":[{"f":6}]}},"attrs":[{"fill":"rgb(144, 214, 137)"}],"properties":{"order":18,"id":15,"name":"camara2","prevSize":32,"code":59662},"setIdx":0,"setId":0,"iconIdx":0},{"icon":{"paths":["M682.667 1024l-341.333-119.467-264.533 102.4c-18.963 7.583-36.504 5.45-52.622-6.4s-24.178-27.733-24.178-47.644v-796.444c0-12.326 3.556-23.229 10.667-32.711s16.83-16.593 29.156-21.333l301.511-102.4 341.333 119.467 264.533-102.4c18.961-7.585 36.506-5.452 52.622 6.4s24.178 27.733 24.178 47.644v796.444c0 12.328-3.556 23.228-10.667 32.711s-16.828 16.594-29.156 21.333l-301.511 102.4zM625.778 884.622v-665.6l-227.556-79.644v665.6l227.556 79.644z"],"attrs":[{"fill":"rgb(12, 117, 33)"}],"isMulticolor":false,"isMulticolor2":false,"grid":0,"tags":["map"],"colorPermutations":{"10711412811131221091121173311442141371192201187125525525512794321657362169131":[{"f":2}]}},"attrs":[{"fill":"rgb(12, 117, 33)"}],"properties":{"order":17,"id":14,"name":"map","prevSize":32,"code":59663},"setIdx":0,"setId":0,"iconIdx":1},{"icon":{"paths":["M76.792 290.133l409.6 409.6 409.6-409.6"],"attrs":[{"fill":"none","stroke":"rgb(107, 114, 128)","strokeLinejoin":"round","strokeLinecap":"round","strokeMiterlimit":"4","strokeWidth":153.6}],"isMulticolor":false,"isMulticolor2":false,"grid":0,"tags":["arrows-down"],"colorPermutations":{"10711412811131221091121173311442141371192201187125525525512794321657362169131":[{"s":5}]}},"attrs":[{"fill":"none","stroke":"rgb(107, 114, 128)","strokeLinejoin":"round","strokeLinecap":"round","strokeMiterlimit":"4","strokeWidth":153.6}],"properties":{"order":16,"id":13,"name":"arrows-down","prevSize":32,"code":59648},"setIdx":0,"setId":0,"iconIdx":2},{"icon":{"paths":["M405.12 537.6l143.36 143.36-36.48 35.84-204.8-204.8 204.8-204.8 36.48 35.84-143.36 143.36h311.68v51.2h-311.68z"],"attrs":[{"fill":"rgb(65, 73, 62)"}],"isMulticolor":false,"isMulticolor2":false,"grid":0,"tags":["arrows-left"],"colorPermutations":{"10711412811131221091121173311442141371192201187125525525512794321657362169131":[{"f":3}]}},"attrs":[{"fill":"rgb(65, 73, 62)"}],"properties":{"order":3,"id":12,"name":"arrows-left","prevSize":32,"code":59649},"setIdx":0,"setId":0,"iconIdx":3},{"icon":{"paths":["M563.2 512l-392.533-392.533 119.467-119.467 512 512-512 512-119.467-119.467 392.533-392.533z"],"attrs":[{"fill":"rgb(0, 69, 13)"}],"isMulticolor":false,"isMulticolor2":false,"grid":0,"tags":["arrows-ringh"],"colorPermutations":{"10711412811131221091121173311442141371192201187125525525512794321657362169131":[{"f":0}]}},"attrs":[{"fill":"rgb(0, 69, 13)"}],"properties":{"order":4,"id":11,"name":"arrows-ringh","prevSize":32,"code":59650},"setIdx":0,"setId":0,"iconIdx":4},{"icon":{"paths":["M512 793.6c64 0 118.4-22.4 163.2-67.2s67.2-99.2 67.2-163.2c0-64-22.4-118.4-67.2-163.2s-99.2-67.2-163.2-67.2c-64 0-118.4 22.4-163.2 67.2s-67.2 99.2-67.2 163.2c0 64 22.4 118.4 67.2 163.2s99.2 67.2 163.2 67.2zM512 691.2c-35.84 0-66.134-12.375-90.88-37.12s-37.12-55.040-37.12-90.88c0-35.84 12.374-66.134 37.12-90.88s55.040-37.12 90.88-37.12c35.84 0 66.135 12.374 90.88 37.12s37.12 55.040 37.12 90.88c0 35.84-12.375 66.135-37.12 90.88s-55.040 37.12-90.88 37.12zM102.4 972.8c-28.16 0-52.267-10.025-72.32-30.080s-30.080-44.16-30.080-72.32v-614.4c0-28.16 10.027-52.266 30.080-72.32s44.16-30.080 72.32-30.080h161.28l94.72-102.4h307.2l94.72 102.4h161.28c28.16 0 52.265 10.026 72.32 30.080s30.080 44.16 30.080 72.32v614.4c0 28.16-10.025 52.265-30.080 72.32s-44.16 30.080-72.32 30.080h-819.2zM102.4 870.4h819.2v-614.4h-207.36l-93.44-102.4h-217.6l-93.44 102.4h-207.36v614.4z"],"attrs":[{"fill":"rgb(192, 201, 187)"}],"isMulticolor":false,"isMulticolor2":false,"grid":0,"tags":["camara"],"colorPermutations":{"10711412811131221091121173311442141371192201187125525525512794321657362169131":[{"f":7}]}},"attrs":[{"fill":"rgb(192, 201, 187)"}],"properties":{"order":5,"id":10,"name":"camara","prevSize":32,"code":59651},"setIdx":0,"setId":0,"iconIdx":5},{"icon":{"paths":["M56.889 1024v-682.667l455.111-341.333 455.111 341.333v682.667h-341.333v-398.222h-227.556v398.222h-341.333z"],"attrs":[{"fill":"rgb(0, 69, 13)"}],"isMulticolor":false,"isMulticolor2":false,"grid":0,"tags":["home"],"colorPermutations":{"10711412811131221091121173311442141371192201187125525525512794321657362169131":[{"f":0}]}},"attrs":[{"fill":"rgb(0, 69, 13)"}],"properties":{"order":6,"id":9,"name":"home","prevSize":32,"code":59652},"setIdx":0,"setId":0,"iconIdx":6},{"icon":{"paths":["M460.8 768h102.4v-204.8h204.8v-102.4h-204.8v-204.8h-102.4v204.8h-204.8v102.4h204.8v204.8zM512 1024c-70.826 0-137.386-13.44-199.68-40.32s-116.48-63.36-162.56-109.44c-46.080-46.080-82.56-100.265-109.44-162.56s-40.32-128.855-40.32-199.68c0-70.826 13.44-137.386 40.32-199.68s63.36-116.48 109.44-162.56c46.080-46.080 100.266-82.56 162.56-109.44s128.854-40.32 199.68-40.32c70.825 0 137.385 13.44 199.68 40.32s116.48 63.36 162.56 109.44c46.080 46.080 82.56 100.266 109.44 162.56s40.32 128.854 40.32 199.68c0 70.825-13.44 137.385-40.32 199.68s-63.36 116.48-109.44 162.56c-46.080 46.080-100.265 82.56-162.56 109.44s-128.855 40.32-199.68 40.32zM512 921.6c114.345 0 211.2-39.68 290.56-119.040s119.040-176.215 119.040-290.56c0-114.346-39.68-211.2-119.040-290.56s-176.215-119.040-290.56-119.040c-114.346 0-211.2 39.68-290.56 119.040s-119.040 176.214-119.040 290.56c0 114.345 39.68 211.2 119.040 290.56s176.214 119.040 290.56 119.040z"],"attrs":[{"fill":"rgb(65, 73, 62)"}],"isMulticolor":false,"isMulticolor2":false,"grid":0,"tags":["Icon+"],"colorPermutations":{"10711412811131221091121173311442141371192201187125525525512794321657362169131":[{"f":3}]}},"attrs":[{"fill":"rgb(65, 73, 62)"}],"properties":{"order":7,"id":8,"name":"Icon","prevSize":32,"code":59653},"setIdx":0,"setId":0,"iconIdx":7},{"icon":{"paths":["M469.333 968.516c-31.289 0-62.815-3.556-94.578-10.667s-64.237-17.3-97.422-30.578c11.378-114.722 44.563-221.867 99.556-321.422 54.993-99.554 125.629-187.258 211.911-263.11-104.296 53.096-194.607 123.259-270.933 210.489-76.326 87.232-129.659 186.788-160 298.666-3.793-2.844-7.348-5.922-10.667-9.244-3.318-3.317-6.874-6.872-10.667-10.667-44.563-44.561-78.459-94.339-101.689-149.333-23.23-54.989-34.844-112.356-34.844-172.088 0-64.474 12.8-126.104 38.4-184.889s61.156-110.933 106.667-156.444c76.8-76.8 176.356-126.815 298.667-150.045s293.928-25.363 514.844-6.4c17.067 226.607 14.222 399.407-8.533 518.4s-72.061 216.416-147.911 292.266c-46.461 46.461-98.372 82.256-155.733 107.378-57.361 25.128-116.385 37.689-177.067 37.689z"],"attrs":[{"fill":"rgb(255, 255, 255)"}],"isMulticolor":false,"isMulticolor2":false,"grid":0,"tags":["logo"],"colorPermutations":{"10711412811131221091121173311442141371192201187125525525512794321657362169131":[{"f":8}]}},"attrs":[{"fill":"rgb(255, 255, 255)"}],"properties":{"order":8,"id":7,"name":"logo","prevSize":32,"code":59654},"setIdx":0,"setId":0,"iconIdx":8},{"icon":{"paths":["M0 853.333v-113.778h1024v113.778h-1024zM0 568.889v-113.778h1024v113.778h-1024zM0 284.444v-113.778h1024v113.778h-1024z"],"attrs":[{"fill":"rgb(0, 69, 13)"}],"isMulticolor":false,"isMulticolor2":false,"grid":0,"tags":["menu"],"colorPermutations":{"10711412811131221091121173311442141371192201187125525525512794321657362169131":[{"f":0}]}},"attrs":[{"fill":"rgb(0, 69, 13)"}],"properties":{"order":9,"id":6,"name":"menu","prevSize":32,"code":59655},"setIdx":0,"setId":0,"iconIdx":9},{"icon":{"paths":["M494.035 700.632c56.138 0 103.862-19.649 143.157-58.947 39.3-39.298 58.95-87.017 58.95-143.158s-19.65-103.859-58.95-143.158c-39.295-39.298-87.018-58.947-143.157-58.947-56.141 0-103.86 19.649-143.158 58.947s-58.947 87.017-58.947 143.158c0 56.141 19.649 103.859 58.947 143.158s87.017 58.947 143.158 58.947zM494.035 619.789c-33.684 0-62.316-11.789-85.895-35.368s-35.368-52.211-35.368-85.895c0-33.684 11.789-62.316 35.368-85.895s52.211-35.368 85.895-35.368c33.684 0 62.315 11.789 85.894 35.368s35.371 52.211 35.371 85.895c0 33.684-11.792 62.316-35.371 85.895s-52.209 35.368-85.894 35.368zM494.035 835.368c-109.287 0-208.842-30.504-298.667-91.508-89.825-61.007-154.947-142.784-195.368-245.334 40.421-102.55 105.544-184.328 195.368-245.333s189.38-91.509 298.667-91.509c109.284 0 208.844 30.503 298.665 91.509 89.826 61.006 154.947 142.783 195.368 245.333-40.421 102.55-105.542 184.328-195.368 245.334-89.821 61.003-189.381 91.508-298.665 91.508z"],"attrs":[{"fill":"rgb(113, 122, 109)"}],"isMulticolor":false,"isMulticolor2":false,"grid":0,"tags":["ojo-login"],"colorPermutations":{"10711412811131221091121173311442141371192201187125525525512794321657362169131":[{"f":4}]}},"attrs":[{"fill":"rgb(113, 122, 109)"}],"properties":{"order":10,"id":5,"name":"ojo-login","prevSize":32,"code":59656},"setIdx":0,"setId":0,"iconIdx":10},{"icon":{"paths":["M844.353 943.158l-188.632-186.384c-26.198 8.23-52.585 14.406-79.161 18.524-26.57 4.118-54.081 6.176-82.525 6.176-113.030 0-213.708-31.254-302.035-93.755s-152.327-143.531-192-243.087c15.719-39.672 35.556-76.538 59.509-110.596s51.275-64.562 81.965-91.509l-123.509-125.754 62.877-62.877 826.384 826.384-62.874 62.879zM494.035 646.737c8.233 0 15.906-0.372 23.017-1.121s14.784-2.247 23.016-4.495l-242.525-242.525c-2.245 8.234-3.742 15.906-4.491 23.018s-1.123 14.783-1.123 23.017c0 56.141 19.649 103.859 58.947 143.158 39.298 39.297 87.017 58.947 143.158 58.947zM821.895 666.947l-142.595-141.474c5.239-12.725 9.356-25.637 12.347-38.737 2.997-13.1 4.495-27.134 4.495-42.105 0-56.141-19.65-103.859-58.95-143.158-39.295-39.298-87.018-58.947-143.157-58.947-14.971 0-29.006 1.497-42.105 4.491s-26.012 7.485-38.737 13.474l-114.526-114.526c30.69-12.725 62.128-22.269 94.316-28.632s65.871-9.544 101.053-9.544c113.030 0 213.705 31.251 302.033 93.754s152.328 143.532 192 243.088c-17.214 44.164-39.855 85.146-67.929 122.947-28.068 37.799-60.82 70.923-98.245 99.368zM614.174 460.351l-134.735-134.737c20.959-3.743 40.234-2.059 57.825 5.053 17.589 7.111 32.749 17.403 45.474 30.877s21.897 29.006 27.508 46.597c5.616 17.591 6.925 34.994 3.929 52.211z"],"attrs":[{"fill":"rgb(113, 122, 109)"}],"isMulticolor":false,"isMulticolor2":false,"grid":0,"tags":["ojo-login-most"],"colorPermutations":{"10711412811131221091121173311442141371192201187125525525512794321657362169131":[{"f":4}]}},"attrs":[{"fill":"rgb(113, 122, 109)"}],"properties":{"order":11,"id":4,"name":"ojo-login-most","prevSize":32,"code":59657},"setIdx":0,"setId":0,"iconIdx":11},{"icon":{"paths":["M204.8 819.2h409.6v-102.4h-409.6v102.4zM204.8 614.4h409.6v-102.4h-409.6v102.4zM102.4 1024c-28.16 0-52.267-10.025-72.32-30.080s-30.080-44.16-30.080-72.32v-819.2c0-28.16 10.027-52.267 30.080-72.32s44.16-30.080 72.32-30.080h409.6l307.2 307.2v614.4c0 28.16-10.025 52.265-30.080 72.32s-44.16 30.080-72.32 30.080h-614.4zM460.8 358.4v-256h-358.4v819.2h614.4v-563.2h-256zM102.4 102.4v0z"],"attrs":[{"fill":"rgb(65, 73, 62)"}],"width":819,"isMulticolor":false,"isMulticolor2":false,"grid":0,"tags":["report"],"colorPermutations":{"10711412811131221091121173311442141371192201187125525525512794321657362169131":[{"f":3}]}},"attrs":[{"fill":"rgb(65, 73, 62)"}],"properties":{"order":12,"id":3,"name":"report","prevSize":32,"code":59658},"setIdx":0,"setId":0,"iconIdx":12},{"icon":{"paths":["M409.6 512c28.16 0 52.266-10.026 72.32-30.080s30.080-44.16 30.080-72.32c0-28.16-10.026-52.266-30.080-72.32s-44.16-30.080-72.32-30.080c-28.16 0-52.266 10.026-72.32 30.080s-30.080 44.16-30.080 72.32c0 28.16 10.026 52.266 30.080 72.32s44.16 30.080 72.32 30.080zM409.6 1024c-137.386-116.905-240-225.495-307.84-325.76s-101.76-193.066-101.76-278.4c0-128 41.173-229.974 123.52-305.92s177.706-113.92 286.080-113.92c108.375 0 203.735 37.973 286.080 113.92s123.52 177.92 123.52 305.92c0 85.334-33.92 178.135-101.76 278.4s-170.455 208.855-307.84 325.76z"],"attrs":[{"fill":"rgb(27, 94, 32)"}],"width":819,"isMulticolor":false,"isMulticolor2":false,"grid":0,"tags":["ubicacion"],"colorPermutations":{"10711412811131221091121173311442141371192201187125525525512794321657362169131":[{"f":1}]}},"attrs":[{"fill":"rgb(27, 94, 32)"}],"properties":{"order":13,"id":2,"name":"ubicacion","prevSize":32,"code":59659},"setIdx":0,"setId":0,"iconIdx":13},{"icon":{"paths":["M197.12 773.12c43.52-33.28 92.16-59.52 145.92-78.72s110.080-28.8 168.96-28.8c58.88 0 115.2 9.6 168.96 28.8s102.4 45.44 145.92 78.72c29.865-34.985 53.12-74.665 69.76-119.040s24.96-91.735 24.96-142.080c0-113.494-39.895-210.134-119.68-289.92s-176.425-119.68-289.92-119.68c-113.494 0-210.134 39.894-289.92 119.68s-119.68 176.426-119.68 289.92c0 50.345 8.32 97.705 24.96 142.080s39.894 84.055 69.76 119.040zM512 563.2c-50.346 0-92.8-17.28-127.36-51.84s-51.84-77.014-51.84-127.36c0-50.346 17.28-92.8 51.84-127.36s77.014-51.84 127.36-51.84c50.345 0 92.8 17.28 127.36 51.84s51.84 77.014 51.84 127.36c0 50.346-17.28 92.8-51.84 127.36s-77.015 51.84-127.36 51.84zM512 1024c-70.826 0-137.386-13.44-199.68-40.32s-116.48-63.36-162.56-109.44c-46.080-46.080-82.56-100.265-109.44-162.56s-40.32-128.855-40.32-199.68c0-70.826 13.44-137.386 40.32-199.68s63.36-116.48 109.44-162.56c46.080-46.080 100.266-82.56 162.56-109.44s128.854-40.32 199.68-40.32c70.825 0 137.385 13.44 199.68 40.32s116.48 63.36 162.56 109.44c46.080 46.080 82.56 100.266 109.44 162.56s40.32 128.854 40.32 199.68c0 70.825-13.44 137.385-40.32 199.68s-63.36 116.48-109.44 162.56c-46.080 46.080-100.265 82.56-162.56 109.44s-128.855 40.32-199.68 40.32z"],"attrs":[{"fill":"rgb(0, 69, 13)"}],"isMulticolor":false,"isMulticolor2":false,"grid":0,"tags":["user"],"colorPermutations":{"10711412811131221091121173311442141371192201187125525525512794321657362169131":[{"f":0}]}},"attrs":[{"fill":"rgb(0, 69, 13)"}],"properties":{"order":14,"id":1,"name":"user","prevSize":32,"code":59660},"setIdx":0,"setId":0,"iconIdx":14},{"icon":{"paths":["M512 512c-70.4 0-130.667-25.067-180.8-75.2s-75.2-110.4-75.2-180.8c0-70.4 25.067-130.667 75.2-180.8s110.4-75.2 180.8-75.2c70.4 0 130.669 25.067 180.8 75.2s75.2 110.4 75.2 180.8c0 70.4-25.069 130.667-75.2 180.8s-110.4 75.2-180.8 75.2zM0 1024v-179.2c0-36.269 9.333-69.6 28-100s43.467-53.6 74.4-69.6c66.133-33.069 133.333-57.867 201.6-74.4s137.6-24.8 208-24.8c70.4 0 139.731 8.267 208 24.8s135.469 41.331 201.6 74.4c30.931 16 55.731 39.2 74.4 69.6s28 63.731 28 100v179.2h-1024zM128 896h768v-51.2c0-11.731-2.931-22.4-8.8-32s-13.6-17.069-23.2-22.4c-57.6-28.8-115.731-50.4-174.4-64.8-58.667-14.4-117.867-21.6-177.6-21.6s-118.933 7.2-177.6 21.6c-58.667 14.4-116.8 36-174.4 64.8-9.6 5.331-17.333 12.8-23.2 22.4s-8.8 20.269-8.8 32v51.2zM512 384c35.2 0 65.333-12.533 90.4-37.6s37.6-55.2 37.6-90.4c0-35.2-12.533-65.333-37.6-90.4s-55.2-37.6-90.4-37.6c-35.2 0-65.333 12.533-90.4 37.6s-37.6 55.2-37.6 90.4c0 35.2 12.533 65.333 37.6 90.4s55.2 37.6 90.4 37.6z"],"attrs":[{"fill":"rgb(65, 73, 62)"}],"isMulticolor":false,"isMulticolor2":false,"grid":0,"tags":["user-nav"],"colorPermutations":{"10711412811131221091121173311442141371192201187125525525512794321657362169131":[{"f":3}]}},"attrs":[{"fill":"rgb(65, 73, 62)"}],"properties":{"order":15,"id":0,"name":"user-nav","prevSize":32,"code":59661},"setIdx":0,"setId":0,"iconIdx":15}],"height":1024,"metadata":{"name":"icomoon"},"preferences":{"showGlyphs":true,"showCodes":true,"showQuickUse":true,"showQuickUse2":true,"showSVGs":true,"fontPref":{"prefix":"icon-","metadata":{"fontFamily":"icomoon"},"metrics":{"emSize":1024,"baseline":6.25,"whitespace":50},"embed":false},"imagePref":{"prefix":"icon-","png":true,"useClassSelector":true,"color":0,"bgColor":16777215,"name":"icomoon","classSelector":".icon"},"historySize":50,"gridSize":16}}
+</file>
+
+<file path="src/assets/icons/style.css">
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?nrjr0e');
+  src:  url('fonts/icomoon.eot?nrjr0e#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?nrjr0e') format('truetype'),
+    url('fonts/icomoon.woff?nrjr0e') format('woff'),
+    url('fonts/icomoon.svg?nrjr0e#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-camara2:before {
+  content: "\e90e";
+  color: #90d689;
+}
+.icon-map:before {
+  content: "\e90f";
+  color: #0c7521;
+}
+.icon-arrows-down:before {
+  content: "\e900";
+}
+.icon-arrows-left:before {
+  content: "\e901";
+  color: #41493e;
+}
+.icon-arrows-ringh:before {
+  content: "\e902";
+  color: #00450d;
+}
+.icon-camara:before {
+  content: "\e903";
+  color: #c0c9bb;
+}
+.icon-home:before {
+  content: "\e904";
+  color: #00450d;
+}
+.icon-Icon:before {
+  content: "\e905";
+  color: #41493e;
+}
+.icon-logo:before {
+  content: "\e906";
+  color: #fff;
+}
+.icon-menu:before {
+  content: "\e907";
+  color: #00450d;
+}
+.icon-ojo-login:before {
+  content: "\e908";
+  color: #717a6d;
+}
+.icon-ojo-login-most:before {
+  content: "\e909";
+  color: #717a6d;
+}
+.icon-report:before {
+  content: "\e90a";
+  color: #41493e;
+}
+.icon-ubicacion:before {
+  content: "\e90b";
+  color: #1b5e20;
+}
+.icon-user:before {
+  content: "\e90c";
+  color: #00450d;
+}
+.icon-user-nav:before {
+  content: "\e90d";
+  color: #41493e;
+}
+</file>
+
+<file path="src/components/AuthCard.css">
+/* Tarjeta Unificada de autenticación (Iniciar Sesión / Registro) */
+.auth {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg) var(--page-padding);
+  background: var(--color-background);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding: var(--space-xl) var(--space-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-2);
+}
+
+.auth-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  text-align: center;
+}
+
+.auth-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--space-xs);
+  color: var(--color-on-primary);
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+}
+
+.auth-logo [class^='icon-'] {
+  font-size: 17px;
+}
+
+.auth-title {
+  font-size: 22px;
+  color: var(--color-primary);
+  line-height: 33px;
+}
+
+.auth-subtitle {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-on-surface-variant);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.auth-form .btn.btn-primary{
+  text-transform: uppercase;
+}
+
+.auth-row {
+  text-align: center;
+  margin-top: calc(-1 * var(--space-xs));
+}
+
+.auth-forgot {
+  padding: 0;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--color-primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.auth-forgot:hover {
+  text-decoration: underline;
+}
+
+.password-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--color-on-surface-variant);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+}
+
+.password-toggle:hover {
+  color: var(--color-primary);
+  background: var(--color-surface-container);
+}
+
+.password-toggle [class^='icon-'] {
+  font-size: 20px;
+}
+
+.auth-notice {
+  margin: 0;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 18px;
+  border-radius: var(--radius-md);
+}
+
+.auth-notice-success {
+  color: var(--color-primary-dark);
+  background: var(--color-surface-container);
+}
+
+.auth-notice-info {
+  color: var(--color-on-surface-variant);
+  background: var(--color-surface-container-low);
+}
+
+.auth-notice-error {
+  color: #9b1c1c;
+  background: #fde8e8;
+}
+
+.auth-footer {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: var(--color-on-surface-variant);
+}
+
+.auth-footer a{
+  font-weight: bold;
+}
+[aria-labelledby="register-title"] .auth-subtitle {
+  font-weight: bold;
+  font-size: 16px;
+  color: var(--color-on-surface);
+}
+
+.auth-subtitle-register{
+  text-align: center;
+  margin: -10px 0 0 0;
+}
+
+@media (min-width: 768px) {
+  .auth-title {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .auth-card {
+    padding: var(--space-xl);
+  }
+}
+</file>
+
+<file path="src/components/AuthCard.tsx">
+import type { ReactNode } from 'react'
+import { Icon } from './Icon'
+import './AuthCard.css'
+
+export interface AuthCardProps {
+  titleId: string
+  title: string
+  subtitle: string
+  children: ReactNode
+  footer?: ReactNode
+}
+
+
+export function AuthCard({ titleId, title, subtitle, children, footer }: AuthCardProps) {
+  return (
+    <main className="auth">
+      <section className="auth-card" aria-labelledby={titleId}>
+        <header className="auth-header">
+          <span className="auth-logo">
+            <Icon name="logo" />
+          </span>
+          <h1 id={titleId} className="auth-title">
+            {title}
+          </h1>
+          <p className="auth-subtitle">{subtitle}</p>
+        </header>
+
+        {children}
+
+        {footer && <p className="auth-footer">{footer}</p>}
+      </section>
+    </main>
+  )
+}
+</file>
+
+<file path="src/components/Button.tsx">
+import type { ButtonHTMLAttributes } from 'react'
+
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'outline'
+  loading?: boolean
+  fullWidth?: boolean
+}
+
+export function Button({
+  variant = 'primary',
+  loading = false,
+  fullWidth = false,
+  disabled,
+  children,
+  type = 'button',
+  className = '',
+  ...rest
+}: ButtonProps) {
+  const classes = ['btn', `btn-${variant}`, fullWidth ? 'btn-block' : '', className]
+    .filter(Boolean)
+    .join(' ')
+
+  return (
+    <button type={type} className={classes} disabled={disabled || loading} {...rest}>
+      {loading && <span className="btn-spinner" aria-hidden="true" />}
+      {loading ? 'Ingresando…' : children}
+    </button>
+  )
+}
+</file>
+
+<file path="src/components/Icon.tsx">
+export type IconName =
+  | 'arrows-down'
+  | 'arrows-left'
+  | 'arrows-ringh'
+  | 'camara'
+  | 'camara2'
+  | 'map'
+  | 'home'
+  | 'Icon'
+  | 'logo'
+  | 'menu'
+  | 'ojo-login'
+  | 'ojo-login-most'
+  | 'report'
+  | 'ubicacion'
+  | 'user'
+  | 'user-nav'
+
+export interface IconProps {
+  name: IconName
+  className?: string
+}
+
+export function Icon({ name, className = '' }: IconProps) {
+  return <span className={`icon-${name} ${className}`.trim()} aria-hidden="true" />
+}
+</file>
+
+<file path="src/components/Input.tsx">
+import type { InputHTMLAttributes, ReactNode, Ref } from 'react'
+
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  label: string
+  error?: string
+  /** Icono decorativo mostrado dentro del campo, a la izquierda. */
+  icon?: ReactNode
+  /** Contenido interactivo a la derecha (ej. botón de mostrar contraseña). */
+  endAdornment?: ReactNode
+  ref?: Ref<HTMLInputElement>
+}
+
+export function Input({
+  label,
+  error,
+  icon,
+  endAdornment,
+  id,
+  className = '',
+  ref,
+  ...rest
+}: InputProps) {
+  const inputId = id ?? rest.name
+  const errorId = error ? `${inputId}-error` : undefined
+
+  const inputClasses = [
+    'input',
+    icon ? 'input-has-icon' : '',
+    endAdornment ? 'input-has-adornment' : '',
+  ]
+    .filter(Boolean)
+    .join(' ')
+
+  return (
+    <div className={`field ${error ? 'field-invalid' : ''} ${className}`.trim()}>
+      <label htmlFor={inputId}>{label}</label>
+      <div className="input-wrap">
+        {icon && (
+          <span className="input-icon" aria-hidden="true">
+            {icon}
+          </span>
+        )}
+        <input
+          id={inputId}
+          ref={ref}
+          className={inputClasses}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={errorId}
+          {...rest}
+        />
+        {endAdornment && <span className="input-adornment">{endAdornment}</span>}
+      </div>
+      {error && (
+        <span id={errorId} className="field-error" role="alert">
+          {error}
+        </span>
+      )}
+    </div>
+  )
+}
+</file>
+
+<file path="src/components/PasswordToggle.tsx">
+import { Icon } from './Icon'
+
+export interface PasswordToggleProps {
+  visible: boolean
+  onToggle: () => void
+}
+
+/** Botón accesible para mostrar u ocultar una contraseña (iconos IcoMoon). */
+export function PasswordToggle({ visible, onToggle }: PasswordToggleProps) {
+  return (
+    <button
+      type="button"
+      className="password-toggle"
+      onClick={onToggle}
+      aria-label={visible ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+      aria-pressed={visible}
+    >
+      <Icon name={visible ? 'ojo-login-most' : 'ojo-login'} />
+    </button>
+  )
+}
+</file>
+
+<file path="src/pages/Login/Login.tsx">
+import { useRef, useState, type ChangeEvent, type FormEvent } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { AuthCard } from '../../components/AuthCard'
+import { Button } from '../../components/Button'
+import { Input } from '../../components/Input'
+import { PasswordToggle } from '../../components/PasswordToggle'
+import { isValidEmail, MIN_PASSWORD_LENGTH } from '../../utils/validation'
+import type { LoginErrors, LoginRequest } from '../../types/auth'
+import { isValidCredentials, signIn } from '../../utils/auth'
+
+const initialState: LoginRequest = { email: '', password: '' }
+
+type Notice = { type: 'success' | 'info' | 'error'; message: string }
+
+function validate(form: LoginRequest): LoginErrors {
+  const errors: LoginErrors = {}
+
+  if (!form.email.trim()) {
+    errors.email = 'Ingresa tu correo electrónico.'
+  } else if (!isValidEmail(form.email)) {
+    errors.email = 'Ingresa un correo electrónico válido.'
+  }
+
+  if (!form.password) {
+    errors.password = 'Ingresa tu contraseña.'
+  } else if (form.password.length < MIN_PASSWORD_LENGTH) {
+    errors.password = `La contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres.`
+  }
+
+  return errors
+}
+
+export function Login() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const redirectTo = (location.state as { from?: { pathname?: string } } | null)?.from?.pathname ?? '/home'
+  const [form, setForm] = useState<LoginRequest>(initialState)
+  const [errors, setErrors] = useState<LoginErrors>({})
+  const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [notice, setNotice] = useState<Notice | null>(null)
+
+  const emailRef = useRef<HTMLInputElement>(null)
+  const passwordRef = useRef<HTMLInputElement>(null)
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target
+    setForm((prev) => ({ ...prev, [name]: value }))
+    setErrors((prev) => ({ ...prev, [name]: undefined }))
+    setNotice(null)
+  }
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setNotice(null)
+
+    const nextErrors = validate(form)
+    setErrors(nextErrors)
+
+    if (nextErrors.email) {
+      emailRef.current?.focus()
+      return
+    }
+    if (nextErrors.password) {
+      passwordRef.current?.focus()
+      return
+    }
+
+    if (!isValidCredentials(form.email, form.password)) {
+      setNotice({ type: 'error', message: 'Correo o contraseña incorrectos.' })
+      return
+    }
+
+    // Validación únicamente local: todavía no hay conexión con el backend.
+    setLoading(true)
+    window.setTimeout(() => {
+      signIn()
+      setLoading(false)
+      navigate(redirectTo, { replace: true })
+    }, 600)
+  }
+
+  return (
+    <AuthCard
+      titleId="login-title"
+      title="EcoAlerta"
+      subtitle="Iniciar sesión para continuar"
+      footer={
+        <>
+          ¿No tienes una cuenta? <Link to="/register">Regístrate</Link>
+        </>
+      }
+    >
+      <form className="auth-form" onSubmit={handleSubmit} noValidate>
+        <Input
+          ref={emailRef}
+          label="Correo electrónico"
+          name="email"
+          type="email"
+          autoComplete="email"
+          inputMode="email"
+          placeholder="tu@correo.com"
+          value={form.email}
+          onChange={handleChange}
+          error={errors.email}
+        />
+
+        <Input
+          ref={passwordRef}
+          label="Contraseña"
+          name="password"
+          type={showPassword ? 'text' : 'password'}
+          autoComplete="current-password"
+          placeholder="••••••••"
+          endAdornment={form.password ? (
+            <PasswordToggle
+              visible={showPassword}
+              onToggle={() => setShowPassword((value) => !value)}
+            />
+          ) : undefined}
+          value={form.password}
+          onChange={handleChange}
+          error={errors.password}
+        />
+
+        <div className="auth-row">
+          <button
+            type="button"
+            className="auth-forgot"
+            onClick={() =>
+              setNotice({
+                type: 'info',
+                message: 'La recuperación de contraseña estará disponible próximamente.',
+              })
+            }
+          >
+            ¿Olvidaste tu contraseña?
+          </button>
+        </div>
+
+        {notice && (
+          <p className={`auth-notice auth-notice-${notice.type}`} role={notice.type === 'error' ? 'alert' : 'status'}>
+            {notice.message}
+          </p>
+        )}
+
+        <Button type="submit" fullWidth loading={loading}>
+          Ingresar
+        </Button>
+      </form>
+    </AuthCard>
+  )
+}
+</file>
+
+<file path="src/pages/Register/Register.tsx">
+import { useRef, useState, type ChangeEvent, type FormEvent } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { AuthCard } from '../../components/AuthCard'
+import { Button } from '../../components/Button'
+import { Input } from '../../components/Input'
+import { PasswordToggle } from '../../components/PasswordToggle'
+import { isStrongPassword, isValidEmail } from '../../utils/validation'
+import type { RegisterErrors, RegisterRequest } from '../../types/auth'
+import { registerUser } from '../../utils/auth'
+
+const initialState: RegisterRequest = {
+  name: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+}
+
+type Notice = { type: 'success' | 'error'; message: string }
+
+function validate(form: RegisterRequest): RegisterErrors {
+  const errors: RegisterErrors = {}
+
+  if (!form.name.trim()) {
+    errors.name = 'Ingresa tu nombre.'
+  }
+
+  if (!form.email.trim()) {
+    errors.email = 'Ingresa tu correo electrónico.'
+  } else if (!isValidEmail(form.email)) {
+    errors.email = 'Ingresa un correo electrónico válido.'
+  }
+
+  if (!form.password) {
+    errors.password = 'Ingresa tu contraseña.'
+  } else if (!isStrongPassword(form.password)) {
+    errors.password = 'Usa al menos 8 caracteres e incluye mayúscula, minúscula, número y símbolo.'
+  }
+
+  if (!form.confirmPassword) {
+    errors.confirmPassword = 'Confirma tu contraseña.'
+  } else if (form.confirmPassword !== form.password) {
+    errors.confirmPassword = 'Las contraseñas no coinciden.'
+  }
+
+  return errors
+}
+
+export function Register() {
+  const navigate = useNavigate()
+  const [form, setForm] = useState<RegisterRequest>(initialState)
+  const [errors, setErrors] = useState<RegisterErrors>({})
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [notice, setNotice] = useState<Notice | null>(null)
+
+  const nameRef = useRef<HTMLInputElement>(null)
+  const emailRef = useRef<HTMLInputElement>(null)
+  const passwordRef = useRef<HTMLInputElement>(null)
+  const confirmPasswordRef = useRef<HTMLInputElement>(null)
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target
+    setForm((prev) => ({ ...prev, [name]: value }))
+    if (name === 'password' && !value) setShowPassword(false)
+    if (name === 'confirmPassword' && !value) setShowConfirmPassword(false)
+    setErrors((prev) => ({ ...prev, [name]: undefined }))
+    setNotice(null)
+  }
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setNotice(null)
+
+    const nextErrors = validate(form)
+    setErrors(nextErrors)
+
+    if (nextErrors.name) {
+      nameRef.current?.focus()
+      return
+    }
+    if (nextErrors.email) {
+      emailRef.current?.focus()
+      return
+    }
+    if (nextErrors.password) {
+      passwordRef.current?.focus()
+      return
+    }
+    if (nextErrors.confirmPassword) {
+      confirmPasswordRef.current?.focus()
+      return
+    }
+
+    // Registro únicamente local: todavía no hay conexión con el backend.
+    setLoading(true)
+    window.setTimeout(() => {
+      setLoading(false)
+      const registered = registerUser({
+        name: form.name.trim(),
+        email: form.email.trim(),
+        password: form.password,
+      })
+      if (registered) {
+        setForm(initialState)
+        setErrors({})
+        setShowPassword(false)
+        setShowConfirmPassword(false)
+        setNotice({ type: 'success', message: 'Cuenta creada correctamente. Redirigiendo al inicio de sesión…' })
+        window.setTimeout(() => navigate('/login', { replace: true }), 1500)
+        return
+      }
+
+      setNotice({ type: 'error', message: 'Ya existe una cuenta con ese correo electrónico.' })
+    }, 600)
+  }
+
+  return (
+    <AuthCard
+      titleId="register-title"
+      title="EcoAlerta"
+      subtitle="Crear una cuenta"
+      footer={
+        <>
+          ¿Ya tienes una cuenta? <Link to="/login">Inicia sesión</Link>
+        </>
+      }
+    >
+      <p className='auth-subtitle-register'>
+       Regístrate para comenzar.
+      </p>
+      <form className="auth-form" onSubmit={handleSubmit} noValidate>
+        <Input
+          ref={nameRef}
+          label="Nombre completo"
+          name="name"
+          type="text"
+          autoComplete="name"
+          placeholder="Tu nombre"
+          value={form.name}
+          onChange={handleChange}
+          error={errors.name}
+        />
+
+        <Input
+          ref={emailRef}
+          label="Correo electrónico"
+          name="email"
+          type="email"
+          autoComplete="email"
+          inputMode="email"
+          placeholder="tu@correo.com"
+          value={form.email}
+          onChange={handleChange}
+          error={errors.email}
+        />
+
+        <Input
+          ref={passwordRef}
+          label="Contraseña"
+          name="password"
+          type={showPassword ? 'text' : 'password'}
+          autoComplete="new-password"
+          placeholder="••••••••"
+          endAdornment={form.password ? (
+            <PasswordToggle
+              visible={showPassword}
+              onToggle={() => setShowPassword((value) => !value)}
+            />
+          ) : undefined}
+          value={form.password}
+          onChange={handleChange}
+          error={errors.password}
+        />
+
+        <Input
+          ref={confirmPasswordRef}
+          label="Confirmar contraseña"
+          name="confirmPassword"
+          type={showConfirmPassword ? 'text' : 'password'}
+          autoComplete="new-password"
+          placeholder="••••••••"
+          endAdornment={form.confirmPassword ? (
+            <PasswordToggle
+              visible={showConfirmPassword}
+              onToggle={() => setShowConfirmPassword((value) => !value)}
+            />
+          ) : undefined}
+          value={form.confirmPassword}
+          onChange={handleChange}
+          error={errors.confirmPassword}
+        />
+
+        {notice && (
+          <p className={`auth-notice auth-notice-${notice.type}`} role={notice.type === 'error' ? 'alert' : 'status'}>
+            {notice.message}
+          </p>
+        )}
+
+        <Button type="submit" fullWidth loading={loading}>
+          Crear Cuenta
+        </Button>
+      </form>
+    </AuthCard>
+  )
+}
+</file>
+
+<file path="src/routes/AppRouter.tsx">
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { Login } from '../pages/Login/Login'
+import { Register } from '../pages/Register/Register'
+import { Home } from '../pages/Home/Home'
+import { RequireAuth } from './RequireAuth'
+import { ComingSoon } from '../pages/ComingSoon/ComingSoon'
+import { isAuthenticated } from '../utils/auth'
+
+export function AppRouter() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to={isAuthenticated() ? '/home' : '/login'} replace />} />
+        <Route path="/login" element={isAuthenticated() ? <Navigate to="/home" replace /> : <Login />} />
+        <Route path="/register" element={isAuthenticated() ? <Navigate to="/home" replace /> : <Register />} />
+        <Route element={<RequireAuth />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/mis-reportes" element={<ComingSoon title="Mis reportes" />} />
+          <Route path="/crear" element={<ComingSoon title="Crear reporte" />} />
+          <Route path="/perfil" element={<ComingSoon title="Perfil" />} />
+          <Route path="/reportes" element={<ComingSoon title="Reportes" />} />
+        </Route>
+        <Route path="*" element={<Navigate to={isAuthenticated() ? '/home' : '/login'} replace />} />
+      </Routes>
+    </BrowserRouter>
+  )
+}
+</file>
+
+<file path="src/types/auth.ts">
+export interface User {
+  id: string
+  name: string
+  email: string
+}
+
+export interface LoginRequest {
+  email: string
+  password: string
+}
+
+export type LoginField = keyof LoginRequest
+export type LoginErrors = Partial<Record<LoginField, string>>
+
+export interface RegisterRequest {
+  name: string
+  email: string
+  password: string
+  confirmPassword: string
+}
+
+export type RegisterField = keyof RegisterRequest
+export type RegisterErrors = Partial<Record<RegisterField, string>>
+
+export interface AuthResponse {
+  user: User
+  token: string
+}
+</file>
+
+<file path="src/utils/validation.ts">
+/** Reglas de validación compartidas por los formularios de autenticación. */
+
+export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+export const MIN_PASSWORD_LENGTH = 6
+
+export function isValidEmail(value: string): boolean {
+  return EMAIL_PATTERN.test(value.trim())
+}
+
+export function isStrongPassword(value: string): boolean {
+  return (
+    value.length >= 8 &&
+    /[a-z]/.test(value) &&
+    /[A-Z]/.test(value) &&
+    /\d/.test(value) &&
+    /[^A-Za-z0-9]/.test(value)
+  )
+}
+</file>
+
+<file path="src/App.tsx">
+import { AppRouter } from './routes/AppRouter'
+
+function App() {
+  return <AppRouter />
+}
+
+export default App
+</file>
+
+<file path="src/index.css">
+:root {
+  /* EcoAlerta design system tokens (Google Stitch designMd) */
+  --color-background: #f4faff;
+  --color-surface: #ffffff;
+  --color-surface-container-low: #e9f6fd;
+  --color-surface-container: #e3f0f8;
+  --color-on-surface: #111d23;
+  --color-on-surface-variant: #41493e;
+  --color-outline: #717a6d;
+  --color-outline-variant: #c0c9bb;
+  --color-border: #d9e2dc;
+  --color-primary: #1b5e20;
+  --color-primary-dark: #00450d;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #90d689;
+  --color-secondary: #006e1c;
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+  --page-padding: 20px;
+
+  --shadow-2: 0 4px 12px rgba(38, 50, 56, 0.08);
+
+  --font-sans:
+    'Inter', system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-on-surface-variant);
+  background: var(--color-background);
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--color-background);
+  color: var(--color-on-surface-variant);
+}
+
+#root {
+  min-height: 100svh;
+}
+
+h1 {
+  margin: 0;
+  color: var(--color-on-surface);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 36px;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ---------- Form field ---------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.field > label {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--color-on-surface);
+}
+
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  height: 52px;
+  padding: 0 14px;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-on-surface);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.input::placeholder {
+  color: var(--color-outline);
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  box-shadow: inset 0 0 0 1px var(--color-primary);
+}
+
+.input-has-icon {
+  padding-left: 46px;
+}
+
+.input-has-adornment {
+  padding-right: 48px;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  display: inline-flex;
+  color: var(--color-on-surface-variant);
+  pointer-events: none;
+}
+
+.input-icon [class^='icon-'] {
+  font-size: 20px;
+  color: var(--color-primary-dark);
+}
+
+.input-adornment {
+  position: absolute;
+  right: 6px;
+  display: inline-flex;
+}
+
+.input-wrap:focus-within .input-icon {
+  color: var(--color-primary);
+}
+
+.field-invalid .input {
+  border-color: var(--color-error);
+}
+
+.field-error {
+  margin: var(--space-xs) 0 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-error);
+}
+
+/* ---------- Button ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  min-height: 48px;
+  padding: 0 var(--space-lg);
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  color: var(--color-on-primary);
+  background: var(--color-primary);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+  box-shadow: var(--shadow-2);
+}
+
+.btn-secondary {
+  color: var(--color-primary);
+  background: var(--color-surface);
+  border-color: var(--color-primary);
+}
+
+.btn-outline {
+  color: var(--color-primary);
+  background: transparent;
+  border-color: var(--color-primary);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+@keyframes eco-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btn-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: var(--radius-full);
+  animation: eco-spin 0.7s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-spinner {
+    animation-duration: 2s;
+  }
+}
+</file>
+
+<file path="src/main.tsx">
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import './assets/icons/style.css';
+import App from './App.tsx'
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+</file>
+
+<file path=".gitignore">
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+</file>
+
+<file path=".oxlintrc.json">
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "oxc"],
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }]
+  }
+}
+</file>
+
+<file path="index.html">
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="theme-color" content="#1b5e20" />
+    <title>EcoAlerta</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+</file>
+
+<file path="package.json">
+{
+  "name": "ecoalerta-front-end",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "oxlint": "^1.81.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0"
+  }
+}
+</file>
+
+<file path="README.md">
+# EcoAlerta
+</file>
+
+<file path="tsconfig.app.json">
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "es2023",
+    "lib": ["ES2023", "DOM"],
+    "module": "esnext",
+    "types": ["vite/client"],
+    "allowArbitraryExtensions": true,
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src"]
+}
+</file>
+
+<file path="tsconfig.json">
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}
+</file>
+
+<file path="tsconfig.node.json">
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "target": "es2023",
+    "lib": ["ES2023"],
+    "types": ["node"],
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "module": "nodenext",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+
+    /* Linting */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["vite.config.ts"]
+}
+</file>
+
+<file path="vite.config.ts">
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+})
+</file>
+
+</files>

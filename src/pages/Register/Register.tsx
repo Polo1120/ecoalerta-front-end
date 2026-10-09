@@ -1,11 +1,12 @@
 import { useRef, useState, type ChangeEvent, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AuthCard } from '../../components/AuthCard'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import { PasswordToggle } from '../../components/PasswordToggle'
-import { isValidEmail, MIN_PASSWORD_LENGTH } from '../../utils/validation'
+import { isStrongPassword, isValidEmail } from '../../utils/validation'
 import type { RegisterErrors, RegisterRequest } from '../../types/auth'
+import { registerUser } from '../../utils/auth'
 
 const initialState: RegisterRequest = {
   name: '',
@@ -14,7 +15,7 @@ const initialState: RegisterRequest = {
   confirmPassword: '',
 }
 
-type Notice = { type: 'success'; message: string }
+type Notice = { type: 'success' | 'error'; message: string }
 
 function validate(form: RegisterRequest): RegisterErrors {
   const errors: RegisterErrors = {}
@@ -31,8 +32,8 @@ function validate(form: RegisterRequest): RegisterErrors {
 
   if (!form.password) {
     errors.password = 'Ingresa tu contraseña.'
-  } else if (form.password.length < MIN_PASSWORD_LENGTH) {
-    errors.password = `La contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres.`
+  } else if (!isStrongPassword(form.password)) {
+    errors.password = 'Usa al menos 8 caracteres e incluye mayúscula, minúscula, número y símbolo.'
   }
 
   if (!form.confirmPassword) {
@@ -45,6 +46,7 @@ function validate(form: RegisterRequest): RegisterErrors {
 }
 
 export function Register() {
+  const navigate = useNavigate()
   const [form, setForm] = useState<RegisterRequest>(initialState)
   const [errors, setErrors] = useState<RegisterErrors>({})
   const [showPassword, setShowPassword] = useState(false)
@@ -60,6 +62,8 @@ export function Register() {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
     setForm((prev) => ({ ...prev, [name]: value }))
+    if (name === 'password' && !value) setShowPassword(false)
+    if (name === 'confirmPassword' && !value) setShowConfirmPassword(false)
     setErrors((prev) => ({ ...prev, [name]: undefined }))
     setNotice(null)
   }
@@ -92,10 +96,22 @@ export function Register() {
     setLoading(true)
     window.setTimeout(() => {
       setLoading(false)
-      setNotice({
-        type: 'success',
-        message: 'Cuenta creada correctamente. Registro simulado de forma local.',
+      const registered = registerUser({
+        name: form.name.trim(),
+        email: form.email.trim(),
+        password: form.password,
       })
+      if (registered) {
+        setForm(initialState)
+        setErrors({})
+        setShowPassword(false)
+        setShowConfirmPassword(false)
+        setNotice({ type: 'success', message: 'Cuenta creada correctamente. Redirigiendo al inicio de sesión…' })
+        window.setTimeout(() => navigate('/login', { replace: true }), 1500)
+        return
+      }
+
+      setNotice({ type: 'error', message: 'Ya existe una cuenta con ese correo electrónico.' })
     }, 600)
   }
 
@@ -146,12 +162,12 @@ export function Register() {
           type={showPassword ? 'text' : 'password'}
           autoComplete="new-password"
           placeholder="••••••••"
-          endAdornment={
+          endAdornment={form.password ? (
             <PasswordToggle
               visible={showPassword}
               onToggle={() => setShowPassword((value) => !value)}
             />
-          }
+          ) : undefined}
           value={form.password}
           onChange={handleChange}
           error={errors.password}
@@ -164,19 +180,19 @@ export function Register() {
           type={showConfirmPassword ? 'text' : 'password'}
           autoComplete="new-password"
           placeholder="••••••••"
-          endAdornment={
+          endAdornment={form.confirmPassword ? (
             <PasswordToggle
               visible={showConfirmPassword}
               onToggle={() => setShowConfirmPassword((value) => !value)}
             />
-          }
+          ) : undefined}
           value={form.confirmPassword}
           onChange={handleChange}
           error={errors.confirmPassword}
         />
 
         {notice && (
-          <p className={`auth-notice auth-notice-${notice.type}`} role="status">
+          <p className={`auth-notice auth-notice-${notice.type}`} role={notice.type === 'error' ? 'alert' : 'status'}>
             {notice.message}
           </p>
         )}

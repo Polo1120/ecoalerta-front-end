@@ -3,6 +3,8 @@ export type IconName =
   | 'arrows-left'
   | 'arrows-ringh'
   | 'camara'
+  | 'camara2'
+  | 'map'
   | 'home'
   | 'Icon'
   | 'logo'
