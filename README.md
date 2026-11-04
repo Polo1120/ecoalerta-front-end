@@ -97,3 +97,7 @@ El frontend cuenta con una primera versión funcional de las pantallas de autent
 ## Repositorio
 
 Este proyecto utiliza Git y GitHub para el control de versiones y la gestión del código fuente.
+
+## Flujo de trabajo Git
+
+Se utilizan ramas independientes para organizar el desarrollo y facilitar la integración de cambios.
