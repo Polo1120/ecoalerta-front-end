@@ -101,3 +101,4 @@ Este proyecto utiliza Git y GitHub para el control de versiones y la gestión de
 ## Flujo de trabajo Git
 
 El desarrollo se organiza mediante ramas para mantener los cambios separados y facilitar su revisión antes de integrarlos.
+
